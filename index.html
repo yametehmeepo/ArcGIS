@@ -89,7 +89,7 @@ body {
         parseOnLoad: true,
         packages: [{
             "name": "src",
-            "location": "/ArcGIS/src" //配置github在线预览需要前面添加/ArcGIS  如果下载到本地需要去掉/ArcGIS
+            "location": "/src"
         }]
     };
 </script>
@@ -100,8 +100,8 @@ body {
     require(["esri/map", "src/Echarts3Layer", "dojo/domReady!"], function (Map, Echarts3Layer) {
         map = new Map("map", {
             basemap: "dark-gray",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-            center: [116.45, 35.75], // longitude, latitude
-            zoom: 5
+            center: [116.45, 30.75], // longitude, latitude
+            zoom: 4
         });
         map.on('load', function () {
             var overlay = new Echarts3Layer(map, echarts);
@@ -136,7 +136,8 @@ body {
                 '唐山': [118.4766, 39.6826],
                 '嘉兴': [120.9155, 30.6354],
                 '大同': [113.7854, 39.8035],
-                '大连': [122.2229, 39.4409],
+                '大连': [121.4429, 38.9888],
+                '松原': [124.4929, 45.1088],
                 '天津': [117.4219, 39.4189],
                 '太原': [112.3352, 37.9413],
                 '威海': [121.9482, 37.1393],
@@ -221,7 +222,9 @@ body {
                 '长治': [112.8625, 36.4746],
                 '阳泉': [113.4778, 38.0951],
                 '青岛': [120.4651, 36.3373],
-                '韶关': [113.7964, 24.7028]
+                '韶关': [113.7964, 24.7028],
+                '首尔': [126.5864, 37.3328],
+                '墨尔本': [144.5864, -37.5028],
             };
 
             var BJData = [
@@ -263,6 +266,41 @@ body {
                 [{name: '广州'}, {name: '海口', value: 10}]
             ];
 
+            //想要去的地方
+            /*var DLData = [
+                [{name: '大连'}, {name: '北京', value: 95}],
+                [{name: '大连'}, {name: '天津', value: 90}],
+                [{name: '大连'}, {name: '长春', value: 85}],
+                [{name: '大连'}, {name: '重庆', value: 80}],
+                [{name: '大连'}, {name: '西安', value: 75}],
+                [{name: '大连'}, {name: '成都', value: 70}],
+                [{name: '大连'}, {name: '常州', value: 65}],
+                [{name: '大连'}, {name: '北海', value: 60}],
+                [{name: '大连'}, {name: '海口', value: 55}],
+                [{name: '大连'}, {name: '郑州', value: 50}],
+                [{name: '大连'}, {name: '昆明', value: 45}],
+                [{name: '大连'}, {name: '济南', value: 40}],
+                [{name: '大连'}, {name: '厦门', value: 35}],
+                [{name: '大连'}, {name: '呼和浩特', value: 30}],
+                [{name: '大连'}, {name: '哈尔滨', value: 25}],
+                [{name: '大连'}, {name: '沈阳', value: 20}],
+                [{name: '大连'}, {name: '青岛', value: 15}],
+                [{name: '大连'}, {name: '丹东', value: 10}],
+                [{name: '大连'}, {name: '合肥', value: 10}],
+                [{name: '大连'}, {name: '拉萨', value: 5}],
+                [{name: '大连'}, {name: '杭州', value: 5}],
+                [{name: '大连'}, {name: '烟台', value: 5}],
+            ];*/
+
+            //去过的地方
+            var DLData = [
+                [{name: '大连'}, {name: '北京', value: 95}],
+                [{name: '大连'}, {name: '南京', value: 90}],
+                [{name: '大连'}, {name: '松原', value: 85}],
+                [{name: '大连'}, {name: '首尔', value: 80}],
+                [{name: '大连'}, {name: '墨尔本', value: 75}],
+            ];
+
             var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
 
             var convertData = function (data) {
@@ -282,11 +320,12 @@ body {
                 return res;
             };
 
-            var color = ['#a6c84c', '#ffa022', '#46bee9'];
+            //var color = ['#a6c84c', '#ffa022', '#46bee9'];
+            var color = ['#46bee9'];
             var series = [];
-            [['北京', BJData], ['上海', SHData], ['广州', GZData]].forEach(function (item, i) {
+            //[['北京', BJData], ['上海', SHData], ['大连', DLData]].forEach(function (item, i) {
+            [['大连', DLData]].forEach(function (item, i) {
                 series.push({
-                            name: item[0] + ' Top10',
                             type: 'lines',
                             zlevel: 1,
                             effect: {
@@ -298,7 +337,7 @@ body {
                             },
                             lineStyle: {
                                 normal: {
-                                    color: color[i],
+                                    color: color[0],
                                     width: 0,
                                     curveness: 0.2
                                 }
@@ -306,7 +345,6 @@ body {
                             data: convertData(item[1])
                         },
                         {
-                            name: item[0] + ' Top10',
                             type: 'lines',
                             zlevel: 2,
                             effect: {
@@ -318,7 +356,7 @@ body {
                             },
                             lineStyle: {
                                 normal: {
-                                    color: color[i],
+                                    color: color[0],
                                     width: 1,
                                     opacity: 0.4,
                                     curveness: 0.2
@@ -327,7 +365,6 @@ body {
                             data: convertData(item[1])
                         },
                         {
-                            name: item[0] + ' Top10',
                             type: 'effectScatter',
                             coordinateSystem: 'geo',
                             zlevel: 2,
@@ -346,7 +383,7 @@ body {
                             },
                             itemStyle: {
                                 normal: {
-                                    color: color[i]
+                                    color: color[0]
                                 }
                             },
                             data: item[1].map(function (dataItem) {
@@ -361,8 +398,8 @@ body {
             option = {
 //        backgroundColor: '#404a59',
                 title: {
-                    text: 'ArcGIS JS API扩展Echarts3之模拟迁徙',
-                    subtext: 'Develop By WanderGIS',
+                    text: '一起去过的地方',
+                    subtext: 'width FQ',
                     left: 'center',
                     textStyle: {
                         color: '#fff'
@@ -371,16 +408,16 @@ body {
                 tooltip: {
                     trigger: 'item'
                 },
-                legend: {
+                /*legend: {
                     orient: 'vertical',
                     top: 'bottom',
                     left: 'left',
-                    data: ['北京 Top10', '上海 Top10', '广州 Top10'],
+                    data: ['大连出发'],
                     textStyle: {
                         color: '#fff'
                     },
                     selectedMode: 'single'
-                },
+                },*/
                 geo: {
                     map: '',
                     label: {

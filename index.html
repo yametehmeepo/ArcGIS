@@ -100,8 +100,8 @@ body {
     require(["esri/map", "src/Echarts3Layer", "dojo/domReady!"], function (Map, Echarts3Layer) {
         map = new Map("map", {
             basemap: "dark-gray",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-            center: [116.45, 30.75], // longitude, latitude
-            zoom: 4
+            center: [123.0245, 13.5670], // longitude, latitude
+            zoom: 3
         });
         map.on('load', function () {
             var overlay = new Echarts3Layer(map, echarts);
@@ -224,6 +224,8 @@ body {
                 '青岛': [120.4651, 36.3373],
                 '韶关': [113.7964, 24.7028],
                 '首尔': [126.5864, 37.3328],
+                '长白山': [128.0465, 42.0082],
+                '新西兰': [174.5923, -36.9275],
                 '墨尔本': [144.5864, -37.5028],
             };
 
@@ -298,7 +300,8 @@ body {
                 [{name: '大连'}, {name: '南京', value: 90}],
                 [{name: '大连'}, {name: '松原', value: 85}],
                 [{name: '大连'}, {name: '首尔', value: 80}],
-                [{name: '大连'}, {name: '墨尔本', value: 75}],
+                [{name: '大连'}, {name: '长白山', value: 80}],
+                [{name: '大连'}, {name: '新西兰', value: 75}],
             ];
 
             var planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z';
